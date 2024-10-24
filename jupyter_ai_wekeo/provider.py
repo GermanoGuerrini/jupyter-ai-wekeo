@@ -20,7 +20,6 @@ Human: {{input}}
 
 
 class WekeoProvider(BaseProvider, WekeoLLM):
-
     id: ClassVar[str] = "wekeo-provider"
     name: ClassVar[str] = "Wekeo Provider"
     models: ClassVar[List[str]] = ["server"]
@@ -45,9 +44,9 @@ class WekeoProvider(BaseProvider, WekeoLLM):
         if self.is_chat_provider:
             return ChatPromptTemplate.from_messages(
                 [
-                    SystemMessagePromptTemplate.from_template(
-                        HUMAN_MESSAGE_TEMPLATE
-                    ).format(provider_name=name, local_model_id=self.model_id),
+                    SystemMessagePromptTemplate.from_template(HUMAN_MESSAGE_TEMPLATE).format(
+                        provider_name=name, local_model_id=self.model_id
+                    ),
                     MessagesPlaceholder(variable_name="history"),
                     HumanMessagePromptTemplate.from_template(
                         HUMAN_MESSAGE_TEMPLATE,

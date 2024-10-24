@@ -10,7 +10,6 @@ from langserve import RemoteRunnable
 
 
 def extract_after_keyword(text, keyword):
-
     keyword_pos = text.find(keyword)
     if keyword_pos == -1:
         return None
@@ -26,9 +25,7 @@ def extract_after_keyword(text, keyword):
 
 def parse_chat_history(chat_string):
     # extract content from messages
-    pattern = (
-        r"(HumanMessage|AIMessage)\(content='([^']*)', additional_kwargs=(\{.*?\})\)"
-    )
+    pattern = r"(HumanMessage|AIMessage)\(content='([^']*)', additional_kwargs=(\{.*?\})\)"
     messages = []
 
     # find in the string
@@ -44,21 +41,16 @@ def parse_chat_history(chat_string):
                 HumanMessage(content=content, additional_kwargs=additional_kwargs_dict)
             )
         elif message_type == "AIMessage":
-            messages.append(
-                AIMessage(content=content, additional_kwargs=additional_kwargs_dict)
-            )
+            messages.append(AIMessage(content=content, additional_kwargs=additional_kwargs_dict))
 
     return messages
 
 
 class WekeoLLM(LLM):
-
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.session_id = str(uuid.uuid4())
-        self.endpoint = (
-            "https://wekeo-llm-01.internal-eumetsat-dataprocessing.s.ewcloud.host/rag"
-        )
+        self.endpoint = "https://wekeo-llm-01.internal-eumetsat-dataprocessing.s.ewcloud.host/rag"
         self.chat = RemoteRunnable(self.endpoint)
 
     @property
@@ -72,11 +64,8 @@ class WekeoLLM(LLM):
         run_manager: Optional[CallbackManagerForLLMRun] = None,
         **kwargs: Any,
     ) -> str:
-
         whole_str = ""
-        for chunk in self.chat.stream(
-            {"question": prompt, "chat_history": [], "jupyter": True}
-        ):
+        for chunk in self.chat.stream({"question": prompt, "chat_history": [], "jupyter": True}):
             whole_str += chunk
         return whole_str
 
@@ -87,7 +76,6 @@ class WekeoLLM(LLM):
         run_manager: Optional[CallbackManagerForLLMRun] = None,
         **kwargs: Any,
     ) -> Iterator[GenerationChunk]:
-
         history_content = extract_after_keyword(prompt, "History:")
         human_content = extract_after_keyword(prompt, "Human:")
 
