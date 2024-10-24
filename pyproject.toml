@@ -42,6 +42,3 @@ skip = [".tox", ".pytype"]
 
 [tool.black]
 line_length = 99
-
-[tool.flake8]
-max-line-length = 99

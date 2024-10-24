@@ -1,4 +1,4 @@
-c = get_config()
+c = get_config()  # noqa: F821
 
 c.AiExtension.help_message_template = """
 Hi there! I'm the {persona_name}.
@@ -7,7 +7,7 @@ You can ask me a question using the text box below. You can also use these comma
 
 Jupyter AI includes [magic commands](https://jupyter-ai.readthedocs.io/en/latest/users/index.html#the-ai-and-ai-magic-commands) that you can use in your notebooks.
 For more information, see the [documentation](https://jupyter-ai.readthedocs.io).
-""".strip()
+""".strip()  # noqa: E501
 
 c.AiExtension.default_language_model = "wekeo-provider:server"
 c.AiExtension.allowed_providers = ["wekeo-provider"]
