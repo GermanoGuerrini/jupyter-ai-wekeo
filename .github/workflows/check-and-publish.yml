@@ -45,7 +45,7 @@ jobs:
 
     - name: Check version
       run: |
-        release=${GITHUB_REF##*/}
+        release=${GITHUB_REF#refs/tags/}
         version=$(python setup.py --version)
         test "$release" == "$version"
 
