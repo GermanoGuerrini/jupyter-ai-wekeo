@@ -46,11 +46,9 @@ jobs:
     - name: Check version
       run: |
         release=${GITHUB_REF#refs/tags/}
-        echo "release $release"
-        TAG_VERSION=$(echo "${GITHUB_REF##*/}" | sed 's/^v//')
-        echo "Tag version: $TAG_VERSION"
+        echo "Release: $release"
         version=$(python setup.py --version)
-        echo "$release == $version"
+        echo "Version: $version"
         test "$release" == "$version"
 
     - name: Build pip package
