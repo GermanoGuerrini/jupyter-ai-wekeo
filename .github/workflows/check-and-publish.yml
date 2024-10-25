@@ -50,6 +50,7 @@ jobs:
         TAG_VERSION=$(echo "${GITHUB_REF##*/}" | sed 's/^v//')
         echo "Tag version: $TAG_VERSION"
         version=$(python setup.py --version)
+        echo "$release == $version"
         test "$release" == "$version"
 
     - name: Build pip package
