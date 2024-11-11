@@ -48,7 +48,6 @@ def parse_chat_history(chat_string):
     matches = re.findall(pattern, chat_string)
 
     for message_type, content, additional_kwargs in matches:
-
         additional_kwargs_dict = eval(additional_kwargs)
 
         if message_type == "HumanMessage":
@@ -97,7 +96,6 @@ class WekeoLLM(LLM):
         run_manager: Optional[CallbackManagerForLLMRun] = None,
         **kwargs: Any,
     ) -> Iterator[GenerationChunk]:
-
         history_content = extract_after_keyword(prompt, "History:")
         human_content = extract_after_keyword(prompt, "Human:")
         history_content_list = parse_chat_history(history_content)
