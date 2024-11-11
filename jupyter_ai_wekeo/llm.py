@@ -10,6 +10,15 @@ from langserve import RemoteRunnable
 
 
 def extract_after_keyword(text, keyword):
+    """Extract Human or History content from jupyter_ai_wekeo.jupyter_ai_wekeo.TEMPLATE.
+
+    Args:
+        text (str): formatted jupyter_ai_wekeo.jupyter_ai_wekeo.TEMPLATE
+        keyword (str): "Human" or "History"
+
+    Returns:
+        str: returns the extracted contect after the keyword.
+    """
     keyword_pos = text.find(keyword)
     if keyword_pos == -1:
         return None
@@ -24,16 +33,22 @@ def extract_after_keyword(text, keyword):
 
 
 def parse_chat_history(chat_string):
-    # extract content from messages
-    pattern = r"(HumanMessage|AIMessage)\(content='([^']*)', additional_kwargs=(\{.*?\})\)"
+    """Convert a HumanMessage|AIMessage list string in a list of messages.
+
+    Args:
+        chat_string (str): string list of messages
+
+    Returns:
+        list: list of messages
+    """
+
+    pattern = r"(HumanMessage|AIMessage)\(content=['\"](.*?)['\"], additional_kwargs=(\{.*?\})\)"
     messages = []
 
-    # find in the string
     matches = re.findall(pattern, chat_string)
 
-    # extracted messages
     for message_type, content, additional_kwargs in matches:
-        # Convert additional_kwargs from string to dictionary
+
         additional_kwargs_dict = eval(additional_kwargs)
 
         if message_type == "HumanMessage":
@@ -41,7 +56,9 @@ def parse_chat_history(chat_string):
                 HumanMessage(content=content, additional_kwargs=additional_kwargs_dict)
             )
         elif message_type == "AIMessage":
-            messages.append(AIMessage(content=content, additional_kwargs=additional_kwargs_dict))
+            messages.append(
+                AIMessage(content=content, additional_kwargs=additional_kwargs_dict)
+            )
 
     return messages
 
@@ -50,7 +67,9 @@ class WekeoLLM(LLM):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.session_id = str(uuid.uuid4())
-        self.endpoint = "https://wekeo-llm-01.internal-eumetsat-dataprocessing.s.ewcloud.host/rag"
+        self.endpoint = (
+            "https://wekeo-llm-01.internal-eumetsat-dataprocessing.s.ewcloud.host/rag"
+        )
         self.chat = RemoteRunnable(self.endpoint)
 
     @property
@@ -65,7 +84,9 @@ class WekeoLLM(LLM):
         **kwargs: Any,
     ) -> str:
         whole_str = ""
-        for chunk in self.chat.stream({"question": prompt, "chat_history": [], "jupyter": True}):
+        for chunk in self.chat.stream(
+            {"question": prompt, "chat_history": [], "jupyter": True}
+        ):
             whole_str += chunk
         return whole_str
 
@@ -76,9 +97,9 @@ class WekeoLLM(LLM):
         run_manager: Optional[CallbackManagerForLLMRun] = None,
         **kwargs: Any,
     ) -> Iterator[GenerationChunk]:
+
         history_content = extract_after_keyword(prompt, "History:")
         human_content = extract_after_keyword(prompt, "Human:")
-
         history_content_list = parse_chat_history(history_content)
 
         for chunk in self.chat.stream(

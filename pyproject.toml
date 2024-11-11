@@ -20,25 +20,20 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
 ]
-version = "0.1.0"
+version = "0.1.1"
 description = "A Jupyter AI extension."
 authors = [
     { name = "test", email = "test@mail.org" },
 ]
-dependencies = ["jupyter_ai>=2.23", "langserve[client]"]
+dependencies = ["jupyter_ai>=2.23","langserve[client]<=0.2.3","fastapi","langchain-openai"]
 
 [project.entry-points."jupyter_ai.model_providers"]
 my-provider = "jupyter_ai_wekeo.provider:WekeoProvider"
 
 [project.entry-points."jupyter_ai.chat_handlers"]
 
+[tool.hatch.build.hooks.version]
+path = "jupyter_ai_wekeo/_version.py"
+
 [tool.check-wheel-contents]
 ignore = ["W002"]
-
-[tool.isort]
-profile = "black"
-line_length = 99
-skip = [".tox", ".pytype"]
-
-[tool.black]
-line_length = 99
