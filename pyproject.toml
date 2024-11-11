@@ -37,3 +37,6 @@ path = "jupyter_ai_wekeo/_version.py"
 
 [tool.check-wheel-contents]
 ignore = ["W002"]
+
+[tool.isort]
+profile = "black"
