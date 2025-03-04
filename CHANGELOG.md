@@ -2,8 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [0.1.2]
+## [0.1.2] - 2025-03-04
 
+- Added support for the client to handle AIMessage chunks from the server in addition to string chunks.
 - Updated package dependencies
 
 ## [0.1.1] - 2024-11-11

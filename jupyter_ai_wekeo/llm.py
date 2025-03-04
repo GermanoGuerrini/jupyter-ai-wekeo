@@ -86,6 +86,8 @@ class WekeoLLM(LLM):
         for chunk in self.chat.stream(
             {"question": prompt, "chat_history": [], "jupyter": True}
         ):
+            if isinstance(chunk, AIMessage):
+                chunk = chunk.content
             whole_str += chunk
         return whole_str
 
@@ -107,5 +109,7 @@ class WekeoLLM(LLM):
                 "jupyter": True,
             }
         ):
+            if isinstance(chunk, AIMessage):
+                chunk = chunk.content
             chunk = GenerationChunk(text=chunk)
             yield chunk
