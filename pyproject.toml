@@ -25,7 +25,7 @@ description = "A Jupyter AI extension."
 authors = [
     { name = "test", email = "test@mail.org" },
 ]
-dependencies = ["jupyter_ai>=2.23","langserve[client]<=0.2.3","fastapi","langchain-openai"]
+dependencies = ["jupyter_ai>=2.23,<2.29","langserve[client]<=0.2.3","fastapi","langchain-openai","httpx<0.28"]
 
 [project.entry-points."jupyter_ai.model_providers"]
 my-provider = "jupyter_ai_wekeo.provider:WekeoProvider"
