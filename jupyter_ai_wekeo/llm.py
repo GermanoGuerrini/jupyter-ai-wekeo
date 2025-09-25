@@ -1,3 +1,4 @@
+import os
 import re
 import uuid
 from typing import Any, Iterator, List, Optional
@@ -84,7 +85,7 @@ class WekeoLLM(LLM):
     ) -> str:
         whole_str = ""
         for chunk in self.chat.stream(
-            {"question": prompt, "chat_history": [], "jupyter": True}
+            {"user_id":os.environ.get("JUPYTERHUB_USER"),"question": prompt, "chat_history": [], "jupyter": True}
         ):
             if isinstance(chunk, AIMessage):
                 chunk = chunk.content
@@ -104,6 +105,7 @@ class WekeoLLM(LLM):
 
         for chunk in self.chat.stream(
             {
+                "user_id":os.environ.get("JUPYTERHUB_USER"),
                 "question": human_content,
                 "chat_history": history_content_list,
                 "jupyter": True,
