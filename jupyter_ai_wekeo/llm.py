@@ -68,7 +68,7 @@ class WekeoLLM(LLM):
         super().__init__(**kwargs)
         self.session_id = str(uuid.uuid4())
         self.endpoint = (
-            "https://wekeo-llm-01.internal-eumetsat-dataprocessing.s.ewcloud.host/rag"
+            kwargs.get("endpoint")
         )
         self.chat = RemoteRunnable(self.endpoint)
 

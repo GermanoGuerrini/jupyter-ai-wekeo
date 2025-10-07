@@ -24,6 +24,10 @@ class WekeoProvider(BaseProvider, WekeoLLM):
         avatar_route=JUPYTERNAUT_AVATAR_ROUTE,
     )
 
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
     def get_chat_prompt_template(self) -> PromptTemplate:
         """
         Returns a formatted PromptTemplate that structures the chat prompt

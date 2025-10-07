@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.4] - 2025-10-07
+
+- Changed the LLM endpoint address configuration.
+- The endpoint must now be set in the Jupyter AI configuration file.
+
 ## [0.1.3] - 2025-09-25
 
 - Added JupyterHub user ID to the message sent to the LLM server.
