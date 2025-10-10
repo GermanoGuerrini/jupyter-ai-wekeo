@@ -67,9 +67,7 @@ class WekeoLLM(LLM):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.session_id = str(uuid.uuid4())
-        self.endpoint = (
-            kwargs.get("endpoint")
-        )
+        self.endpoint = kwargs.get("endpoint")
         self.chat = RemoteRunnable(self.endpoint)
 
     @property
@@ -85,7 +83,12 @@ class WekeoLLM(LLM):
     ) -> str:
         whole_str = ""
         for chunk in self.chat.stream(
-            {"user_id":os.environ.get("JUPYTERHUB_USER"),"question": prompt, "chat_history": [], "jupyter": True}
+            {
+                "user_id": os.environ.get("JUPYTERHUB_USER"),
+                "question": prompt,
+                "chat_history": [],
+                "jupyter": True,
+            }
         ):
             if isinstance(chunk, AIMessage):
                 chunk = chunk.content
@@ -105,7 +108,7 @@ class WekeoLLM(LLM):
 
         for chunk in self.chat.stream(
             {
-                "user_id":os.environ.get("JUPYTERHUB_USER"),
+                "user_id": os.environ.get("JUPYTERHUB_USER"),
                 "question": human_content,
                 "chat_history": history_content_list,
                 "jupyter": True,

@@ -24,7 +24,6 @@ class WekeoProvider(BaseProvider, WekeoLLM):
         avatar_route=JUPYTERNAUT_AVATAR_ROUTE,
     )
 
-
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
