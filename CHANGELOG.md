@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [0.1.4] - 2025-10-07
+## [0.1.4] - 2025-11-19
 
 - Changed the LLM endpoint address configuration.
 - The endpoint must now be set in the Jupyter AI configuration file.
