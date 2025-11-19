@@ -1,4 +1,4 @@
-c = get_config()
+c = get_config()  # noqa: F821
 
 c.AiExtension.default_language_model = "wekeo-provider:server"
 c.AiExtension.allowed_providers = ["wekeo-provider", "openai", "openai-chat"]
